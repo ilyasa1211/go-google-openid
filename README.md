@@ -47,6 +47,12 @@ certs
 
 ## Run locally (Docker Compose)
 
+**Run database migration**
+
+```bash
+go run cmd/database/migration.go
+```
+
 **Run the server**
 
 ```bash
@@ -61,4 +67,4 @@ curl http://localhost:8080/login/openid/google -i
 
 Now, you will see the `Location` header, you could open that on the browser.
 
-After you login with your google account, you will see JSON response with JWT token, and your account is now stores on database.
+After you login with your google account, you will see JSON response with JWT token, and your account is now stored on database.
