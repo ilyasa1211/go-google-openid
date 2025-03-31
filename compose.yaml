@@ -1,0 +1,40 @@
+services:
+  app:
+    build:
+      context: .
+    networks:
+      - mynetwork
+    env_file:
+      - .env
+
+  database:
+    image: docker.io/library/postgres:17-alpine
+    entrypoint: sh 
+    command: 
+      - -c
+      - | 
+        cp -r /certs /home/certs
+        chown -R postgres:postgres /home/certs
+        docker-entrypoint.sh -c 'config_file=/home/postgres.conf'
+    networks:
+      - mynetwork
+    volumes:
+      - pgdata:/var/lib/postgresql/data:rw
+      - ./certs:/certs
+      - ./config/postgres.conf:/home/postgres.conf
+    env_file:
+      - ./secrets/pgsql.env
+
+  cache:
+    image: docker.io/valkey/valkey:8-alpine
+    volumes:
+      - cache-data:/data:rw
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+
+volumes:
+  pgdata:
+  cache-data:

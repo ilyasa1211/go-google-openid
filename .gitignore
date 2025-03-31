@@ -1,0 +1,4 @@
+/certs/*
+/secrets/*.env
+!/secrets/*example.env
+/.env
